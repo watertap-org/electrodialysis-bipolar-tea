@@ -14,32 +14,33 @@ jobs:
     name: Install dependencies and run scripts
     runs-on: ubuntu-24.04
 
-    - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-    - uses: actions/setup-miniconda@v3
-      with:
-        environment-file: environment.yml
-        activate-environment: watertap-electrodialysis-bipolar-tea
-        miniforge-version: latest
+      - uses: actions/setup-miniconda@v3
+        with:
+          environment-file: environment.yml
+          activate-environment: watertap-electrodialysis-bipolar-tea
+          miniforge-version: latest
 
-    - name: Display installed version
-      run: |
-        pip show pyomo idaes-pse watertap watertap-solvers parameter-sweep
+      - name: Display installed version
+        run: |
+          pip show pyomo idaes-pse watertap watertap-solvers parameter-sweep
 
-    - name: Install IDAES solvers
-      run: |
-        # extra dependencies must be installed on Ubuntu 24.04 and later
-        if [ -f "/etc/os-release" ]; then
-          . /etc/os-release
-          if [ "$ID" = "ubuntu" ] ; then
-          echo '::group::Output of "apt install" for required OS packages'
-          sudo apt install libgfortran5 libgomp1 liblapack3 libblas3
-          echo '::endgroup::'
+      - name: Install IDAES solvers
+        run: |
+          # extra dependencies must be installed on Ubuntu 24.04 and later
+          if [ -f "/etc/os-release" ]; then
+            . /etc/os-release
+            if [ "$ID" = "ubuntu" ] ; then
+            echo '::group::Output of "apt install" for required OS packages'
+            sudo apt install libgfortran5 libgomp1 liblapack3 libblas3
+            echo '::endgroup::'
+            fi
           fi
-        fi
 
-        idaes get-extensions --verbose
+          idaes get-extensions --verbose
 
-    - name: Run BPED_sample_script.py
-      run: |
-        python BPED_sample_script.py
+      - name: Run BPED_sample_script.py
+        run: |
+          python BPED_sample_script.py
