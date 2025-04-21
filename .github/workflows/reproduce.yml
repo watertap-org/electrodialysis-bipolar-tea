@@ -11,8 +11,22 @@ defaults:
 jobs:
 
   scripts:
-    name: Install dependencies and run scripts
-    runs-on: ubuntu-24.04
+    name: Install dependencies and run scripts (${{ matrix.os }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - linux
+          - win64
+          # - macos
+        include:
+          - os: linux
+            runner-image: ubuntu-24.04
+          - os: win64
+            runner-image: windows-2022
+
+    runs-on: ${{ matrix.runner-image }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +44,7 @@ jobs:
 
       - name: Install IDAES solvers
         run: |
-          # extra dependencies must be installed on Ubuntu 24.04 and later
+          # ensure system dependencies are installed (required on GHA starting from ubuntu-24.04)
           if [ -f "/etc/os-release" ]; then
             . /etc/os-release
             if [ "$ID" = "ubuntu" ] ; then
