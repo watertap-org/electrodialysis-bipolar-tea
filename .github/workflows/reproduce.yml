@@ -22,6 +22,7 @@ jobs:
           environment-file: environment.yml
           activate-environment: watertap-electrodialysis-bipolar-tea
           miniforge-version: latest
+          conda-remove-defaults: true
 
       - name: Display installed version
         run: |
