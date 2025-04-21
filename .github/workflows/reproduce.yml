@@ -2,8 +2,9 @@ name: Reproduce analysis
 
 on:
   push:
-  pull_request:
-    branches: ['*']
+  # commented while WIP to avoid running workflows twice for PR #1
+  # pull_request:
+  #   branches: ['*']
  
 defaults:
   run:
