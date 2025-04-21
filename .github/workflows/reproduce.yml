@@ -42,7 +42,8 @@ jobs:
         run: |
           pip show pyomo idaes-pse watertap watertap-solvers parameter-sweep
 
-      - name: Install IDAES solvers
+      - name: Install IDAES solvers (Linux)
+        if: matrix.os == 'linux'
         run: |
           # ensure system dependencies are installed (required on GHA starting from ubuntu-24.04)
           if [ -f "/etc/os-release" ]; then
@@ -57,6 +58,11 @@ jobs:
           # --distro ubuntu2204 must be specified since the version of IDAES pinned in the environment
           # does not have dedicated builds for ubuntu 24.04
           idaes get-extensions --verbose --distro ubuntu2204
+
+      - name: Install IDAES solvers
+        if: matrix.os != 'linux'
+        run: |
+          idaes get-extensions --verbose
 
       - name: Run BPED_sample_script.py
         run: |
