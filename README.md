@@ -15,7 +15,7 @@ conda env create --file environment.yml
 # the following command should be run on Debian/Ubuntu to install required system packages
 # sudo apt install libgfortran5 libgomp1 liblapack3 libblas3
 
-idaes get-extensions --verbose
+idaes get-extensions --verbose --distro ubuntu2204
 
 python BPED_sample_script.py
 ```

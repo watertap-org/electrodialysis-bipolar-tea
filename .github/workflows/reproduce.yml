@@ -39,7 +39,9 @@ jobs:
             fi
           fi
 
-          idaes get-extensions --verbose
+          # --distro ubuntu2204 must be specified since the version of IDAES pinned in the environment
+          # does not have dedicated builds for ubuntu 24.04
+          idaes get-extensions --verbose --distro ubuntu2204
 
       - name: Run BPED_sample_script.py
         run: |
