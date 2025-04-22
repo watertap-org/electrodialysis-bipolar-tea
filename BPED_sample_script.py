@@ -13,8 +13,6 @@ from pyomo.environ import (
     Expression,
     Objective,
     RangeSet,
-    log,
-    exp,
     TransformationFactory,
     units as pyunits,
     value,
@@ -28,7 +26,6 @@ from idaes.core import (
 )
 from idaes.core.util.initialization import propagate_state
 from idaes.core.util.math import smooth_min
-from idaes.core.util.model_serializer import to_json
 from idaes.models.unit_models import (
     Feed,
     Product,
@@ -39,39 +36,23 @@ from watertap.core.solvers import get_solver
 from watertap.core.util.initialization import assert_degrees_of_freedom
 from watertap.property_models.multicomp_aq_sol_prop_pack import (
     MCASParameterBlock,
-    DiffusivityCalculation,
-    EquivalentConductivityCalculation,
-    ElectricalMobilityCalculation,
 )
 
 from parameter_sweep import (parameter_sweep,
                              LinearSample,
-                             PredeterminedFixedSample,
-                             GeomSample,
-                             ReverseGeomSample,
-                             UniformSample,
-                             NormalSample,
-                             LatinHypercubeSample,
-                             PredeterminedFixedSample,
-                             PredeterminedRandomSample,
-    # SetMode,
                              )
 
 from watertap.unit_models.pressure_changer import Pump
 from Biploar_and_Electrodialysis_1D_nmsu import (
     Bipolar_and_Electrodialysis1D,
     ElectricalOperationMode,
-    LimitingCurrentDensityMethod,
     LimitingCurrentDensitybpemMethod,
-    LimitingpotentialMethod,
     PressureDropMethod,
     FrictionFactorMethod,
     HydraulicDiameterMethod,
 )
 from watertap.costing import WaterTAPCosting
 
-# unsupress for debugging
-# wt_debug.activate()
 
 # set up solver
 solver = get_solver()
@@ -88,7 +69,6 @@ class IndexedBlockData(ProcessBlockData):
         super(IndexedBlockData, self).build()
 
 
-# def main():
 
 def build_flowsheet_optimization(m):
 
