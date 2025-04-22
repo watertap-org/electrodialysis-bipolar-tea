@@ -139,7 +139,7 @@ def build_flowsheet_optimization(m):
         bounds=(1, 5000),
         units=pyunits.mole * pyunits.meter ** -3,
     )
-    iscale.set_scaling_factor(m.fs.conc_acid_mol, 1e-2)
+    iscale.set_scaling_factor(m.fs.conc_acid_mol, 1e-1)
     m.fs.conc_acid_mol.fix(100)
     m.fs.feed_acid.properties[0].flow_mol_phase_comp['Liq', 'H_+'].unfix()
     m.fs.feed_acid.properties[0].flow_mol_phase_comp['Liq', 'Cl_-'].unfix()
@@ -756,8 +756,9 @@ def model_solve(m, dof_check=True, tee=False, output_show=False):
         assert_degrees_of_freedom(m, expected_dof=0)
 
     # solve model
-    res = solver.solve(m, tee=tee)
     solver.options["max_iter"] = 10000
+    res = solver.solve(m, tee=tee)
+
 
     print('solver termination condition:', res.solver.termination_condition)
 
