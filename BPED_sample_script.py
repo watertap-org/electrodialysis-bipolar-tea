@@ -127,7 +127,7 @@ def build_flowsheet_optimization(m):
     )
     iscale.set_scaling_factor(m.fs.exit_base_conc, 1e-2)
 
-    m.fs.exit_base_conc.fix(650)
+    m.fs.exit_base_conc.fix(200)
 
     m.fs.eq_Base_exit_conc = Constraint(
         expr=m.fs.Base_exit_conc
