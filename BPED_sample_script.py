@@ -125,9 +125,9 @@ def build_flowsheet_optimization(m):
         bounds=(50, 5000),
         units=pyunits.mole * pyunits.meter ** -3,
     )
-    iscale.set_scaling_factor(m.fs.exit_base_conc, 1e-2)
+    iscale.set_scaling_factor(m.fs.exit_base_conc, 1e-1)
 
-    m.fs.exit_base_conc.fix(650)
+    m.fs.exit_base_conc.fix(200)
 
     m.fs.eq_Base_exit_conc = Constraint(
         expr=m.fs.Base_exit_conc
@@ -883,7 +883,7 @@ if __name__ == "__main__":
     def build_sweep_params(m, num_samples=2, **kwargs):
         sweep_params = dict()
 
-        sweep_params['Inlet acid conc (mol/m3)'] = LinearSample(m.fs.conc_acid_mol, 50,200, 20)
+        sweep_params['Inlet acid conc (mol/m3)'] = LinearSample(m.fs.conc_acid_mol, 50,200, 5)
 
         return sweep_params
 
@@ -934,5 +934,5 @@ if __name__ == "__main__":
     parameter_sweep(m, build_sweep_params,
                     build_outputs,
                     csv_results_file_name='output/Sample_results.csv',
-                    h5_results_file_name='output/Sample_results.h5',
+                    # h5_results_file_name='output/Sample_results.h5',
                     h5_parent_group_name="results", )
