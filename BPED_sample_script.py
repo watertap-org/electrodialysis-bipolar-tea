@@ -13,8 +13,6 @@ from pyomo.environ import (
     Expression,
     Objective,
     RangeSet,
-    log,
-    exp,
     TransformationFactory,
     units as pyunits,
     value,
@@ -39,39 +37,23 @@ from watertap.core.solvers import get_solver
 from watertap.core.util.initialization import assert_degrees_of_freedom
 from watertap.property_models.multicomp_aq_sol_prop_pack import (
     MCASParameterBlock,
-    DiffusivityCalculation,
-    EquivalentConductivityCalculation,
-    ElectricalMobilityCalculation,
 )
 
 from parameter_sweep import (parameter_sweep,
                              LinearSample,
-                             PredeterminedFixedSample,
-                             GeomSample,
-                             ReverseGeomSample,
-                             UniformSample,
-                             NormalSample,
-                             LatinHypercubeSample,
-                             PredeterminedFixedSample,
-                             PredeterminedRandomSample,
-    # SetMode,
                              )
 
 from watertap.unit_models.pressure_changer import Pump
 from Biploar_and_Electrodialysis_1D_nmsu import (
     Bipolar_and_Electrodialysis1D,
     ElectricalOperationMode,
-    LimitingCurrentDensityMethod,
     LimitingCurrentDensitybpemMethod,
-    LimitingpotentialMethod,
     PressureDropMethod,
     FrictionFactorMethod,
     HydraulicDiameterMethod,
 )
 from watertap.costing import WaterTAPCosting
 
-# unsupress for debugging
-# wt_debug.activate()
 
 # set up solver
 solver = get_solver()
@@ -88,7 +70,6 @@ class IndexedBlockData(ProcessBlockData):
         super(IndexedBlockData, self).build()
 
 
-# def main():
 
 def build_flowsheet_optimization(m):
 
@@ -144,9 +125,9 @@ def build_flowsheet_optimization(m):
         bounds=(50, 5000),
         units=pyunits.mole * pyunits.meter ** -3,
     )
-    iscale.set_scaling_factor(m.fs.exit_base_conc, 1e-2)
+    iscale.set_scaling_factor(m.fs.exit_base_conc, 1e-1)
 
-    m.fs.exit_base_conc.fix(650)
+    m.fs.exit_base_conc.fix(200)
 
     m.fs.eq_Base_exit_conc = Constraint(
         expr=m.fs.Base_exit_conc
@@ -158,7 +139,7 @@ def build_flowsheet_optimization(m):
         bounds=(1, 5000),
         units=pyunits.mole * pyunits.meter ** -3,
     )
-    iscale.set_scaling_factor(m.fs.conc_acid_mol, 1e-2)
+    iscale.set_scaling_factor(m.fs.conc_acid_mol, 1e-1)
     m.fs.conc_acid_mol.fix(100)
     m.fs.feed_acid.properties[0].flow_mol_phase_comp['Liq', 'H_+'].unfix()
     m.fs.feed_acid.properties[0].flow_mol_phase_comp['Liq', 'Cl_-'].unfix()
@@ -775,8 +756,9 @@ def model_solve(m, dof_check=True, tee=False, output_show=False):
         assert_degrees_of_freedom(m, expected_dof=0)
 
     # solve model
-    res = solver.solve(m, tee=tee)
     solver.options["max_iter"] = 10000
+    res = solver.solve(m, tee=tee)
+
 
     print('solver termination condition:', res.solver.termination_condition)
 
@@ -901,7 +883,7 @@ if __name__ == "__main__":
     def build_sweep_params(m, num_samples=2, **kwargs):
         sweep_params = dict()
 
-        sweep_params['Inlet acid conc (mol/m3)'] = LinearSample(m.fs.conc_acid_mol, 50,200, 20)
+        sweep_params['Inlet acid conc (mol/m3)'] = LinearSample(m.fs.conc_acid_mol, 50,200, 5)
 
         return sweep_params
 
@@ -952,5 +934,5 @@ if __name__ == "__main__":
     parameter_sweep(m, build_sweep_params,
                     build_outputs,
                     csv_results_file_name='output/Sample_results.csv',
-                    h5_results_file_name='output/Sample_results.h5',
+                    # h5_results_file_name='output/Sample_results.h5',
                     h5_parent_group_name="results", )
