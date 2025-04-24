@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# ensure any nonzero exit code within this script causes the build to fail
+set -e
+
+# display information about the system, including active environment and OS version
+conda info
+
+# install IDAES solvers
+idaes get-extensions --verbose --distro ubuntu2204
+
+# verify that solvers are accessible to IDAES
+python -c "import idaes; from pyomo.environ import SolverFactory as S; print(S('ipopt').executable())"
+
+# create a new IPython kernel with the name of the current env
+python -m ipykernel install --user --name "$CONDA_DEFAULT_ENV"
+jupyter kernelspec list
+
+# remove the default kernel to minimize confusion
+jupyter kernelspec remove -f python3
+jupyter kernelspec list

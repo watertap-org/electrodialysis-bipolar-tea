@@ -10,6 +10,16 @@
 - In principle, any other OS supported by IDAES should also work, but model convergence results might differ due to numerical differences between platforms
 - For more information on OS support for IDAES, see the [IDAES documentation](https://idaes-pse.readthedocs.io/en/stable/tutorials/getting_started/#os-specific-instructions)
 
+## Running on Binder (no installation required)
+
+1. Click on this button to launch a temporary containerized cloud environment with all dependencies installed and configured: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/watertap-org/electrodialysis-bipolar-tea/HEAD) (no charge and/or registration required)
+2. Wait (potentially up to several minutes) for the cloud environment to be built
+3. In the JupyterLab interface, open a terminal window
+4. In the terminal tab, run the sample script
+  ```sh
+  python BPED_sample_script.py
+  ```
+
 ## Running locally (manual installation)
 
 ### Windows
