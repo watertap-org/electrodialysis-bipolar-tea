@@ -4,11 +4,9 @@
 set -e
 
 # display information about the system, including active environment and OS version
-conda info
-
-conda info --envs
-
-conda activate watertap-electrodialysis-bipolar-tea
+# note: rather than creating a new Conda env, Binder/repo2docker will update an existing env
+#   named `notebook`. We'll still use the expect name of the environment when possible
+#   (e.g. for the IPython kernel) for consistency with local installation
 conda info
 
 # install IDAES solvers
@@ -17,8 +15,8 @@ idaes get-extensions --verbose --distro ubuntu2204
 # verify that solvers are accessible to IDAES
 python -c "import idaes; from pyomo.environ import SolverFactory as S; print(S('ipopt').executable())"
 
-# create a new IPython kernel with the name of the current env
-python -m ipykernel install --user --name "$CONDA_DEFAULT_ENV"
+# create a new IPython kernel matching the name of the Conda env as specified in environment.yml
+python -m ipykernel install --user --name watertap-electrodialysis-bipolar-tea
 jupyter kernelspec list
 
 # remove the default kernel to minimize confusion
