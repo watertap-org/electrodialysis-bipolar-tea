@@ -3,8 +3,12 @@
 # ensure any nonzero exit code within this script causes the build to fail
 set -e
 
-conda activate watertap-electrodialysis-bipolar-tea
 # display information about the system, including active environment and OS version
+conda info
+
+conda info --envs
+
+conda activate watertap-electrodialysis-bipolar-tea
 conda info
 
 # install IDAES solvers
