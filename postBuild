@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --login
 
 # ensure any nonzero exit code within this script causes the build to fail
 set -e
