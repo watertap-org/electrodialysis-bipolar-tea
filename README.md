@@ -17,11 +17,13 @@
 2. Install and configure Git for Windows
 3. Clone this repository and change directory to the local clone:
   ```sh
-  git clone https://github.com/watertap-org/electrodialysis-bipolar-tea && cd electrodialysis-bipolar-tea
+  git clone https://github.com/watertap-org/electrodialysis-bipolar-tea
+  cd electrodialysis-bipolar-tea
   ```
 4. Create the Conda environment from the `environment.yml` file in the repository
   ```sh
   conda env create --file environment.yml
+  ```
 5. Activate the environment
   ```sh
   conda activate watertap-electrodialysis-bipolar-tea
@@ -41,11 +43,13 @@
 2. Install and configure Git
 3. Clone this repository and change directory to the local clone:
   ```sh
-  git clone https://github.com/watertap-org/electrodialysis-bipolar-tea && cd electrodialysis-bipolar-tea
+  git clone https://github.com/watertap-org/electrodialysis-bipolar-tea
+  cd electrodialysis-bipolar-tea
   ```
 4. Create the Conda environment from the `environment.yml` file in the repository
   ```sh
   conda env create --file environment.yml
+  ```
 5. Activate the environment
   ```sh
   conda activate watertap-electrodialysis-bipolar-tea
