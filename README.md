@@ -1,21 +1,63 @@
 # electrodialysis-bipolar-tea
 
-## Running locally (requires installation)
+## Operating system support
 
-Prerequisites:
+- Currently tested on:
+  - Windows 10
+  - Windows Server 2022 (`windows-2022` in GitHub Actions)
+  - Linux Ubuntu 22.04
+  - Linux Ubuntu 24.04 (`ubuntu-24.04` in GitHub Actions)
+- In principle, any other OS supported by IDAES should also work, but model convergence results might differ due to numerical differences between platforms
 
-- Git
-- A Conda distribution (recommended: Miniforge)
+## Running locally (manual installation)
 
-```sh
-git clone https://github.com/watertap-org/electrodialysis-bipolar-tea && cd electrodialysis-bipolar-tea
+### Windows
 
-conda env create --file environment.yml
+1. Install and configure Conda using a Conda distribution compatible with `conda-forge` (recommended: Miniforge)
+2. Install and configure Git for Windows
+3. Clone this repository and change directory to the local clone:
+  ```sh
+  git clone https://github.com/watertap-org/electrodialysis-bipolar-tea && cd electrodialysis-bipolar-tea
+  ```
+4. Create the Conda environment from the `environment.yml` file in the repository
+  ```sh
+  conda env create --file environment.yml
+5. Activate the environment
+  ```sh
+  conda activate watertap-electrodialysis-bipolar-tea
+  ```
+6. Install the IDAES solvers
+  ```sh
+  idaes get-extensions --verbose
+  ```
+7. Run the sample script
+  ```sh
+  python BPED_sample_script.py
+  ```
 
-# the following command should be run on Debian/Ubuntu to install required system packages
-# sudo apt install libgfortran5 libgomp1 liblapack3 libblas3
+### Linux (Ubuntu/Debian and compatible distributions)
 
-idaes get-extensions --verbose --distro ubuntu2204
-
-python BPED_sample_script.py
-```
+1. Install and configure Conda using a Conda distribution compatible with `conda-forge` (recommended: Miniforge)
+2. Install and configure Git
+3. Clone this repository and change directory to the local clone:
+  ```sh
+  git clone https://github.com/watertap-org/electrodialysis-bipolar-tea && cd electrodialysis-bipolar-tea
+  ```
+4. Create the Conda environment from the `environment.yml` file in the repository
+  ```sh
+  conda env create --file environment.yml
+5. Activate the environment
+  ```sh
+  conda activate watertap-electrodialysis-bipolar-tea
+  ```
+6. Install IDAES solvers and required system packages
+  ```sh
+  sudo apt install libgfortran5 libgomp1 liblapack3 libblas3
+  # note: we specify --distro ubuntu2204 since these are the latest compatible builds available
+  # in most case these are also compatible with later versions and/or distributions
+  idaes get-extensions --verbose --distro ubuntu2204
+  ```
+7. Run the sample script
+  ```sh
+  python BPED_sample_script.py
+  ```
